@@ -970,7 +970,7 @@ class MSBibEntry {
         if (title != null) {
             hm.put("title", title);
         }
-        if (year != null) {
+        if ((year != null) && (Integer.parseInt(year) > 0) && (Integer.parseInt(year) < 2020)) {
             hm.put("year", year);
         }
         if (shortTitle != null) {
