@@ -71,7 +71,7 @@ public class BibtexSingleField {
 
 
         if (name == "year") {
-            setFlag(pStandard, Flag.WRITEABLE);
+            setFlag(pStandard, Flag.STANDARD);
             weight = pWeight;
             length = pLength;
 
