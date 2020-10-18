@@ -36,8 +36,8 @@ import net.sf.jabref.model.entry.IdGenerator;
  */
 public class OvidImporter extends ImportFormat {
 
-    private static final Pattern OVID_SOURCE_PATTERN = Pattern.compile(
-            "Source ([ \\w&\\-,:]+)\\.[ ]+([0-9]+)\\(([\\w\\-]+)\\):([0-9]+\\-?[0-9]+?)\\,.*([0-9][0-9][0-9][0-9])");
+    private static final Pattern OVID_SOURCE_PATTERN = Pattern
+            .compile("Source ([ \\w&\\-,:]+)\\.[ ]+([0-9]+)\\(([\\w\\-]+)\\):([0-9]+\\-?[0-9]+?)\\,.*([0-9][0-9][0-9][0-9])");
 
     private static final Pattern OVID_SOURCE_PATTERN_NO_ISSUE = Pattern
             .compile("Source ([ \\w&\\-,:]+)\\.[ ]+([0-9]+):([0-9]+\\-?[0-9]+?)\\,.*([0-9][0-9][0-9][0-9])");
@@ -48,15 +48,13 @@ public class OvidImporter extends ImportFormat {
     private static final Pattern INCOLLECTION_PATTERN = Pattern.compile(
             "(.+)\\(([0-9][0-9][0-9][0-9])\\)\\. ([ \\w&\\-,:]+)\\.[ ]+\\(pp. ([0-9]+\\-?[0-9]+?)\\).[A-Za-z0-9, ]+pp\\. "
                     + "([\\w, ]+): ([\\w, ]+)");
-    private static final Pattern BOOK_PATTERN = Pattern
-            .compile("\\(([0-9][0-9][0-9][0-9])\\)\\. [A-Za-z, ]+([0-9]+) pp\\. ([\\w, ]+): ([\\w, ]+)");
+    private static final Pattern BOOK_PATTERN = Pattern.compile(
+            "\\(([0-9][0-9][0-9][0-9])\\)\\. [A-Za-z, ]+([0-9]+) pp\\. ([\\w, ]+): ([\\w, ]+)");
 
     private static final String OVID_PATTERN_STRING = "<[0-9]+>";
     private static final Pattern OVID_PATTERN = Pattern.compile(OVID_PATTERN_STRING);
 
     private static final int MAX_ITEMS = 50;
-
-
     /**
      * Return the name of this import format.
      */
@@ -73,6 +71,8 @@ public class OvidImporter extends ImportFormat {
     public String getCLIId() {
         return "ovid";
     }
+
+
 
     /**
      * Check whether the source is in the correct format for this importer.
@@ -125,7 +125,8 @@ public class OvidImporter extends ImportFormat {
                 String content = field.substring(linebreak).trim();
 
                 // Check if this is the author field (due to a minor special treatment for this field):
-                boolean isAuthor = (fieldName.indexOf("Author") == 0) && !fieldName.contains("Author Keywords")
+                boolean isAuthor = (fieldName.indexOf("Author") == 0)
+                        && !fieldName.contains("Author Keywords")
                         && !fieldName.contains("Author e-mail");
 
                 // Remove unnecessary dots at the end of lines, unless this is the author field,

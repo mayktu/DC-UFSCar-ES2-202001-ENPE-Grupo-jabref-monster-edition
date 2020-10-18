@@ -110,7 +110,8 @@ public class InspecImporter extends ImportFormat {
                 } else if ("PY".equals(f3)) {
                     h.put("year", frest);
                 } else if ("AU".equals(f3)) {
-                    h.put("author", AuthorList.fixAuthorLastNameFirst(frest.replace(",-", ", ").replace(";", " and ")));
+                    h.put("author",
+                            AuthorList.fixAuthorLastNameFirst(frest.replace(",-", ", ").replace(";", " and ")));
                 } else if ("AB".equals(f3)) {
                     h.put("abstract", frest);
                 } else if ("ID".equals(f3)) {

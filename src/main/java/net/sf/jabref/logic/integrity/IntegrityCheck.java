@@ -1,6 +1,7 @@
 package net.sf.jabref.logic.integrity;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -25,6 +26,7 @@ import net.sf.jabref.model.entry.ParsedFileField;
 public class IntegrityCheck {
 
     private final BibDatabaseContext bibDatabaseContext;
+
 
     public IntegrityCheck(BibDatabaseContext bibDatabaseContext) {
         this.bibDatabaseContext = Objects.requireNonNull(bibDatabaseContext);
@@ -71,6 +73,7 @@ public class IntegrityCheck {
 
     @FunctionalInterface
     public interface Checker {
+
         List<IntegrityMessage> check(BibEntry entry);
     }
 
@@ -84,7 +87,8 @@ public class IntegrityCheck {
             }
 
             if ("proceedings".equalsIgnoreCase(entry.getType())) {
-                return Collections.singletonList(new IntegrityMessage(Localization.lang("wrong entry type as proceedings has page numbers"), entry, "pages"));
+                return Collections.singletonList(new IntegrityMessage(
+                        Localization.lang("wrong entry type as proceedings has page numbers"), entry, "pages"));
             }
 
             return Collections.emptyList();
@@ -94,6 +98,7 @@ public class IntegrityCheck {
     private static class AbbreviationChecker implements Checker {
 
         private final String field;
+
 
         private AbbreviationChecker(String field) {
             this.field = field;
@@ -107,7 +112,8 @@ public class IntegrityCheck {
             }
 
             if (value.get().contains(".")) {
-                return Collections.singletonList(new IntegrityMessage(Localization.lang("abbreviation detected"), entry, field));
+                return Collections
+                        .singletonList(new IntegrityMessage(Localization.lang("abbreviation detected"), entry, field));
             }
 
             return Collections.emptyList();
@@ -117,6 +123,7 @@ public class IntegrityCheck {
     private static class FileChecker implements Checker {
 
         private final BibDatabaseContext context;
+
 
         private FileChecker(BibDatabaseContext context) {
             this.context = context;
@@ -136,9 +143,8 @@ public class IntegrityCheck {
             for (ParsedFileField p : parsedFileFields) {
                 Optional<File> file = FileUtil.expandFilename(context, p.getLink());
                 if ((!file.isPresent()) || !file.get().exists()) {
-                    return Collections.singletonList(
-                            new IntegrityMessage(Localization.lang("link should refer to a correct file path"), entry,
-                                    Globals.FILE_FIELD));
+                    return Collections.singletonList(new IntegrityMessage(
+                            Localization.lang("link should refer to a correct file path"), entry, Globals.FILE_FIELD));
                 }
             }
 
@@ -156,7 +162,9 @@ public class IntegrityCheck {
             }
 
             if (!value.get().contains("://")) {
-                return Collections.singletonList(new IntegrityMessage(Localization.lang("should contain a protocol") + ": http[s]://, file://, ftp://, ...", entry, "url"));
+                return Collections.singletonList(new IntegrityMessage(
+                        Localization.lang("should contain a protocol") + ": http[s]://, file://, ftp://, ...", entry,
+                        "url"));
             }
 
             return Collections.emptyList();
@@ -191,6 +199,7 @@ public class IntegrityCheck {
 
         private final String field;
 
+
         private BracketChecker(String field) {
             this.field = field;
         }
@@ -209,7 +218,8 @@ public class IntegrityCheck {
                     counter++;
                 } else if (a == '}') {
                     if (counter == 0) {
-                        return Collections.singletonList(new IntegrityMessage(Localization.lang("unexpected closing curly bracket"), entry, field));
+                        return Collections.singletonList(new IntegrityMessage(
+                                Localization.lang("unexpected closing curly bracket"), entry, field));
                     } else {
                         counter--;
                     }
@@ -217,7 +227,8 @@ public class IntegrityCheck {
             }
 
             if (counter > 0) {
-                return Collections.singletonList(new IntegrityMessage(Localization.lang("unexpected opening curly bracket"), entry, field));
+                return Collections.singletonList(
+                        new IntegrityMessage(Localization.lang("unexpected opening curly bracket"), entry, field));
             }
 
             return Collections.emptyList();
@@ -230,13 +241,13 @@ public class IntegrityCheck {
         private static final Pattern INSIDE_CURLY_BRAKETS = Pattern.compile("\\{[^}\\{]*\\}");
         private static final Predicate<String> HAS_CAPITAL_LETTERS = Pattern.compile("[\\p{Lu}\\p{Lt}]").asPredicate();
 
+
         @Override
         public List<IntegrityMessage> check(BibEntry entry) {
             Optional<String> value = entry.getFieldOptional("title");
             if (!value.isPresent()) {
                 return Collections.emptyList();
             }
-
 
             /*
              * Algorithm:
@@ -256,10 +267,12 @@ public class IntegrityCheck {
                 valueOnlySpacesWithinCurlyBraces = matcher.replaceAll("");
             }
 
-            boolean hasCapitalLettersThatBibtexWillConvertToSmallerOnes = HAS_CAPITAL_LETTERS.test(valueOnlySpacesWithinCurlyBraces);
+            boolean hasCapitalLettersThatBibtexWillConvertToSmallerOnes = HAS_CAPITAL_LETTERS
+                    .test(valueOnlySpacesWithinCurlyBraces);
 
             if (hasCapitalLettersThatBibtexWillConvertToSmallerOnes) {
-                return Collections.singletonList(new IntegrityMessage(Localization.lang("large capitals are not masked using curly brackets {}"), entry, "title"));
+                return Collections.singletonList(new IntegrityMessage(
+                        Localization.lang("large capitals are not masked using curly brackets {}"), entry, "title"));
             }
 
             return Collections.emptyList();
@@ -268,7 +281,9 @@ public class IntegrityCheck {
 
     private static class YearChecker implements Checker {
 
-        private static final Predicate<String> CONTAINS_FOUR_DIGIT = Pattern.compile("([^0-9]|^)[0-9]{4}([^0-9]|$)").asPredicate();
+        private static final Predicate<String> CONTAINS_FOUR_DIGIT = Pattern.compile("([^0-9]|^)[0-9]{4}([^0-9]|$)")
+                .asPredicate();
+
 
         /**
          * Checks, if the number String contains a four digit year
@@ -281,7 +296,21 @@ public class IntegrityCheck {
             }
 
             if (!CONTAINS_FOUR_DIGIT.test(value.get().trim())) {
-                return Collections.singletonList(new IntegrityMessage(Localization.lang("should contain a four digit number"), entry, "year"));
+                return Collections.singletonList(
+                        new IntegrityMessage(Localization.lang("should contain a four digit number"), entry, "year"));
+            }
+
+            int year = Integer.valueOf(value.get().trim());
+            if (year < 0) {
+                return Collections.singletonList(
+                        new IntegrityMessage(Localization.lang("year can not be negative"), entry, "year"));
+            }
+
+            LocalDateTime now = LocalDateTime.now();
+            int currentlyYear = now.getYear();
+            if (currentlyYear < year) {
+                return Collections.singletonList(
+                        new IntegrityMessage(Localization.lang("year can not be in the future"), entry, "year"));
             }
 
             return Collections.emptyList();
@@ -297,19 +326,19 @@ public class IntegrityCheck {
      */
     private static class PagesChecker implements Checker {
 
-        private static final String PAGES_EXP = ""
-                + "\\A"                       // begin String
-                + "\\d+"                      // number
-                + "(?:"                       // non-capture group
-                + "\\+|\\-{2}\\d+"            // + or --number (range)
-                + ")?"                        // optional group
-                + "(?:"                       // non-capture group
-                + ","                         // comma
-                + "\\d+(?:\\+|\\-{2}\\d+)?"   // repeat former pattern
-                + ")*"                        // repeat group 0,*
-                + "\\z";                      // end String
+        private static final String PAGES_EXP = "" + "\\A" // begin String
+                + "\\d+" // number
+                + "(?:" // non-capture group
+                + "\\+|\\-{2}\\d+" // + or --number (range)
+                + ")?" // optional group
+                + "(?:" // non-capture group
+                + "," // comma
+                + "\\d+(?:\\+|\\-{2}\\d+)?" // repeat former pattern
+                + ")*" // repeat group 0,*
+                + "\\z"; // end String
 
         private static final Predicate<String> VALID_PAGE_NUMBER = Pattern.compile(PAGES_EXP).asPredicate();
+
 
         /**
          * Checks, if the page numbers String conforms to the BibTex manual
@@ -322,7 +351,8 @@ public class IntegrityCheck {
             }
 
             if (!VALID_PAGE_NUMBER.test(value.get().trim())) {
-                return Collections.singletonList(new IntegrityMessage(Localization.lang("should contain a valid page number range"), entry, "pages"));
+                return Collections.singletonList(new IntegrityMessage(
+                        Localization.lang("should contain a valid page number range"), entry, "pages"));
             }
 
             return Collections.emptyList();
@@ -348,9 +378,8 @@ public class IntegrityCheck {
                     hashCount++;
                 }
                 if ((hashCount % 2) == 1) {
-                    results.add(
-                            new IntegrityMessage(Localization.lang("odd number of unescaped '#'"), entry,
-                                    field.getKey()));
+                    results.add(new IntegrityMessage(Localization.lang("odd number of unescaped '#'"), entry,
+                            field.getKey()));
                 }
             }
             return results;

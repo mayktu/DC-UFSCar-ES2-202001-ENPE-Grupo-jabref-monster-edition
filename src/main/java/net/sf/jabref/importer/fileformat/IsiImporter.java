@@ -75,6 +75,8 @@ public class IsiImporter extends ImportFormat {
         return "isi";
     }
 
+
+
     /**
      * Check whether the source is in the correct format for this importer.
      */
@@ -103,6 +105,8 @@ public class IsiImporter extends ImportFormat {
         }
         return false;
     }
+
+
 
     public static void processSubSup(Map<String, String> map) {
 
