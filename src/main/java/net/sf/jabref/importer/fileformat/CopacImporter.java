@@ -56,8 +56,6 @@ public class CopacImporter extends ImportFormat {
         return "cpc";
     }
 
-
-
     /**
      * Check whether the source is in the correct format for this importer.
      */

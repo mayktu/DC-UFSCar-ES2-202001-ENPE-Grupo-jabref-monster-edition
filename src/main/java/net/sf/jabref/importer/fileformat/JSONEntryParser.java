@@ -31,6 +31,7 @@ public class JSONEntryParser {
 
     private static final Log LOGGER = LogFactory.getLog(JSONEntryParser.class);
 
+
     /**
      * Convert a JSONObject containing a bibJSON entry to a BibEntry
      *
@@ -43,8 +44,6 @@ public class JSONEntryParser {
 
         // Fields that are accessible in the journal part of the BibJson object
         String[] journalSingleFieldStrings = {"publisher", "number", "volume"};
-
-
 
         BibEntry entry = new BibEntry();
         entry.setType("article");
@@ -152,8 +151,7 @@ public class JSONEntryParser {
      */
     public static BibEntry parseSpringerJSONtoBibtex(JSONObject springerJsonEntry) {
         // Fields that are directly accessible at the top level Json object
-        String[] singleFieldStrings = {"issn", "volume", "abstract", "doi", "title", "number",
-                "publisher"};
+        String[] singleFieldStrings = {"issn", "volume", "abstract", "doi", "title", "number", "publisher"};
 
         BibEntry entry = new BibEntry();
         String nametype;

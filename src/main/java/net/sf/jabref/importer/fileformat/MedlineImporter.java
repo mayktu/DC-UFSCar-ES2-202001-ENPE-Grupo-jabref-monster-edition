@@ -90,8 +90,8 @@ public class MedlineImporter extends ImportFormat {
      * @return Will return an empty list on error.
      */
     public static List<BibEntry> fetchMedline(String id, OutputPrinter status) {
-        String baseUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&rettype=citation&id=" +
-                id;
+        String baseUrl = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&rettype=citation&id="
+                + id;
         try {
             URL url = new URL(baseUrl);
             URLConnection data = url.openConnection();

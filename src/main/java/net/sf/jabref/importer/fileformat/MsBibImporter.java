@@ -44,16 +44,14 @@ public class MsBibImporter extends ImportFormat {
             The effect of this method is primarily to avoid unnecessary processing of
             files when searching for a suitable import format. If this method returns
             false, the import routine will move on to the next import format.
-
+        
             The correct behaviour is to return false if it is certain that the file is
             not of the MsBib type, and true otherwise. Returning true is the safe choice
             if not certain.
          */
         Document docin;
         try {
-            DocumentBuilder dbuild = DocumentBuilderFactory.
-                    newInstance().
-                    newDocumentBuilder();
+            DocumentBuilder dbuild = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             docin = dbuild.parse(in);
         } catch (Exception e) {
             return false;

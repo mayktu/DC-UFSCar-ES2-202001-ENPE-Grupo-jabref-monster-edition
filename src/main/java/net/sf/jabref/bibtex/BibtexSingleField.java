@@ -67,19 +67,9 @@ public class BibtexSingleField {
 
     public BibtexSingleField(String fieldName, boolean pStandard, double pWeight, int pLength) {
         name = fieldName;
-
-
-
-        if (name == "year") {
-            setFlag(pStandard, Flag.STANDARD);
-            weight = pWeight;
-            length = pLength;
-
-        } else {
-            setFlag(pStandard, Flag.STANDARD);
-            length = pLength;
-            weight = pWeight;
-        }
+        setFlag(pStandard, Flag.STANDARD);
+        weight = pWeight;
+        length = pLength;
     }
 
     /**

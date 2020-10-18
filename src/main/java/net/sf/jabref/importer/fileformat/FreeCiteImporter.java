@@ -54,6 +54,7 @@ public class FreeCiteImporter extends ImportFormat {
 
     private static final Log LOGGER = LogFactory.getLog(FreeCiteImporter.class);
 
+
     @Override
     public boolean isRecognizedFormat(InputStream in) throws IOException {
         // TODO: We don't know how to recognize text files, therefore we return
@@ -62,8 +63,7 @@ public class FreeCiteImporter extends ImportFormat {
     }
 
     @Override
-    public List<BibEntry> importEntries(InputStream in, OutputPrinter status)
-            throws IOException {
+    public List<BibEntry> importEntries(InputStream in, OutputPrinter status) throws IOException {
         try (Scanner scan = new Scanner(in)) {
             String text = scan.useDelimiter("\\A").next();
             return importEntries(text, status);
@@ -166,15 +166,9 @@ public class FreeCiteImporter extends ImportFormat {
                                 type = BibtexEntryTypes.TECHREPORT;
                                 // the content of the "tech" field seems to contain the number of the technical report
                                 e.setField("number", parser.getElementText());
-                            } else if ("doi".equals(ln)
-                                    || "institution".equals(ln)
-                                    || "location".equals(ln)
-                                    || "number".equals(ln)
-                                    || "note".equals(ln)
-                                    || "title".equals(ln)
-                                    || "pages".equals(ln)
-                                    || "publisher".equals(ln)
-                                    || "volume".equals(ln)
+                            } else if ("doi".equals(ln) || "institution".equals(ln) || "location".equals(ln)
+                                    || "number".equals(ln) || "note".equals(ln) || "title".equals(ln)
+                                    || "pages".equals(ln) || "publisher".equals(ln) || "volume".equals(ln)
                                     || "year".equals(ln)) {
                                 e.setField(ln, parser.getElementText());
                             } else if ("booktitle".equals(ln)) {
@@ -214,7 +208,9 @@ public class FreeCiteImporter extends ImportFormat {
                     e.setType(type);
 
                     // autogenerate label (BibTeX key)
-                    LabelPatternUtil.makeLabel(JabRefGUI.getMainFrame().getCurrentBasePanel().getBibDatabaseContext().getMetaData(), JabRefGUI.getMainFrame().getCurrentBasePanel().getDatabase(), e);
+                    LabelPatternUtil.makeLabel(
+                            JabRefGUI.getMainFrame().getCurrentBasePanel().getBibDatabaseContext().getMetaData(),
+                            JabRefGUI.getMainFrame().getCurrentBasePanel().getDatabase(), e);
 
                     res.add(e);
                 }

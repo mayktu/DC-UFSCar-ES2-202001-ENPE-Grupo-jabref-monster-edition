@@ -41,6 +41,7 @@ public class RisImporter extends ImportFormat {
 
     private static final Pattern RECOGNIZED_FORMAT_PATTERN = Pattern.compile("TY  - .*");
 
+
     /**
      * Return the name of this import format.
      */
@@ -113,8 +114,7 @@ public class RisImporter extends ImportFormat {
                 boolean done = false;
                 while (!done && (j < (fields.length - 1))) {
                     if ((fields[j + 1].length() >= 6) && !"  - ".equals(fields[j + 1].substring(2, 6))) {
-                        if ((current.length() > 0)
-                                && !Character.isWhitespace(current.charAt(current.length() - 1))
+                        if ((current.length() > 0) && !Character.isWhitespace(current.charAt(current.length() - 1))
                                 && !Character.isWhitespace(fields[j + 1].charAt(0))) {
                             current.append(' ');
                         }

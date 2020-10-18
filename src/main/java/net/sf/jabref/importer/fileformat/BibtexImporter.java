@@ -52,8 +52,7 @@ public class BibtexImporter extends ImportFormat {
      * @return a list of BibTeX entries contained in the given inputStream
      */
     @Override
-    public List<BibEntry> importEntries(InputStream in, OutputPrinter status)
-            throws IOException {
+    public List<BibEntry> importEntries(InputStream in, OutputPrinter status) throws IOException {
         ParserResult pr = BibtexParser.parse(ImportFormatReader.getReaderDefaultEncoding(in));
         return new ArrayList<>(pr.getDatabase().getEntries());
     }

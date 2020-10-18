@@ -91,115 +91,79 @@ public class BiblioscapeImporter extends ImportFormat {
                 // add item
                 for (Map.Entry<String, StringBuilder> entry : lines.entrySet()) {
                     if ("AU".equals(entry.getKey())) {
-                        hm.put("author", entry.getValue()
-                                .toString());
+                        hm.put("author", entry.getValue().toString());
                     } else if ("TI".equals(entry.getKey())) {
-                        titleTI = entry.getValue()
-                                .toString();
+                        titleTI = entry.getValue().toString();
                     } else if ("ST".equals(entry.getKey())) {
-                        titleST = entry.getValue()
-                                .toString();
+                        titleST = entry.getValue().toString();
                     } else if ("YP".equals(entry.getKey())) {
-                        hm.put("year", entry
-                                .getValue().toString());
+                        hm.put("year", entry.getValue().toString());
                     } else if ("VL".equals(entry.getKey())) {
-                        hm.put("volume", entry
-                                .getValue().toString());
+                        hm.put("volume", entry.getValue().toString());
                     } else if ("NB".equals(entry.getKey())) {
-                        hm.put("number", entry
-                                .getValue().toString());
+                        hm.put("number", entry.getValue().toString());
                     } else if ("PS".equals(entry.getKey())) {
-                        pages[0] = entry.getValue()
-                                .toString();
+                        pages[0] = entry.getValue().toString();
                     } else if ("PE".equals(entry.getKey())) {
-                        pages[1] = entry.getValue()
-                                .toString();
+                        pages[1] = entry.getValue().toString();
                     } else if ("KW".equals(entry.getKey())) {
-                        hm.put("keywords", entry
-                                .getValue().toString());
+                        hm.put("keywords", entry.getValue().toString());
                     } else if ("RT".equals(entry.getKey())) {
-                        type[0] = entry.getValue()
-                                .toString();
+                        type[0] = entry.getValue().toString();
                     } else if ("SB".equals(entry.getKey())) {
-                        comments.add("Subject: "
-                                + entry.getValue());
+                        comments.add("Subject: " + entry.getValue());
                     } else if ("SA".equals(entry.getKey())) {
-                        comments
-                        .add("Secondary Authors: " + entry.getValue());
+                        comments.add("Secondary Authors: " + entry.getValue());
                     } else if ("NT".equals(entry.getKey())) {
-                        hm.put("note", entry
-                                .getValue().toString());
+                        hm.put("note", entry.getValue().toString());
                     } else if ("PB".equals(entry.getKey())) {
-                        hm.put("publisher", entry
-                                .getValue().toString());
+                        hm.put("publisher", entry.getValue().toString());
                     } else if ("TA".equals(entry.getKey())) {
-                        comments
-                        .add("Tertiary Authors: " + entry.getValue());
+                        comments.add("Tertiary Authors: " + entry.getValue());
                     } else if ("TT".equals(entry.getKey())) {
-                        comments
-                        .add("Tertiary Title: " + entry.getValue());
+                        comments.add("Tertiary Title: " + entry.getValue());
                     } else if ("ED".equals(entry.getKey())) {
-                        hm.put("edition", entry
-                                .getValue().toString());
+                        hm.put("edition", entry.getValue().toString());
                     } else if ("TW".equals(entry.getKey())) {
-                        type[1] = entry.getValue()
-                                .toString();
+                        type[1] = entry.getValue().toString();
                     } else if ("QA".equals(entry.getKey())) {
-                        comments
-                        .add("Quaternary Authors: " + entry.getValue());
+                        comments.add("Quaternary Authors: " + entry.getValue());
                     } else if ("QT".equals(entry.getKey())) {
-                        comments
-                        .add("Quaternary Title: " + entry.getValue());
+                        comments.add("Quaternary Title: " + entry.getValue());
                     } else if ("IS".equals(entry.getKey())) {
-                        hm.put("isbn", entry
-                                .getValue().toString());
+                        hm.put("isbn", entry.getValue().toString());
                     } else if ("AB".equals(entry.getKey())) {
-                        hm.put("abstract", entry
-                                .getValue().toString());
+                        hm.put("abstract", entry.getValue().toString());
                     } else if ("AD".equals(entry.getKey())) {
-                        address = entry.getValue()
-                                .toString();
+                        address = entry.getValue().toString();
                     } else if ("LG".equals(entry.getKey())) {
-                        hm.put("language", entry
-                                .getValue().toString());
+                        hm.put("language", entry.getValue().toString());
                     } else if ("CO".equals(entry.getKey())) {
-                        country = entry.getValue()
-                                .toString();
+                        country = entry.getValue().toString();
                     } else if ("UR".equals(entry.getKey()) || "AT".equals(entry.getKey())) {
                         String s = entry.getValue().toString().trim();
-                        hm.put(s.startsWith("http://") || s.startsWith("ftp://") ? "url"
-                                : "pdf", entry.getValue().toString());
+                        hm.put(s.startsWith("http://") || s.startsWith("ftp://") ? "url" : "pdf",
+                                entry.getValue().toString());
                     } else if ("C1".equals(entry.getKey())) {
-                        comments.add("Custom1: "
-                                + entry.getValue());
+                        comments.add("Custom1: " + entry.getValue());
                     } else if ("C2".equals(entry.getKey())) {
-                        comments.add("Custom2: "
-                                + entry.getValue());
+                        comments.add("Custom2: " + entry.getValue());
                     } else if ("C3".equals(entry.getKey())) {
-                        comments.add("Custom3: "
-                                + entry.getValue());
+                        comments.add("Custom3: " + entry.getValue());
                     } else if ("C4".equals(entry.getKey())) {
-                        comments.add("Custom4: "
-                                + entry.getValue());
+                        comments.add("Custom4: " + entry.getValue());
                     } else if ("C5".equals(entry.getKey())) {
-                        comments.add("Custom5: "
-                                + entry.getValue());
+                        comments.add("Custom5: " + entry.getValue());
                     } else if ("C6".equals(entry.getKey())) {
-                        comments.add("Custom6: "
-                                + entry.getValue());
+                        comments.add("Custom6: " + entry.getValue());
                     } else if ("DE".equals(entry.getKey())) {
-                        hm.put("annote", entry
-                                .getValue().toString());
+                        hm.put("annote", entry.getValue().toString());
                     } else if ("CA".equals(entry.getKey())) {
-                        comments.add("Categories: "
-                                + entry.getValue());
+                        comments.add("Categories: " + entry.getValue());
                     } else if ("TH".equals(entry.getKey())) {
-                        comments.add("Short Title: "
-                                + entry.getValue());
-                    } else if ("SE".equals(entry.getKey()))
-                    {
-                        hm.put("chapter", entry
-                                .getValue().toString());
+                        comments.add("Short Title: " + entry.getValue());
+                    } else if ("SE".equals(entry.getKey())) {
+                        hm.put("chapter", entry.getValue().toString());
                         //else if (entry.getKey().equals("AC"))
                         // hm.put("",entry.getValue().toString());
                         //else if (entry.getKey().equals("LP"))
@@ -228,8 +192,7 @@ public class BiblioscapeImporter extends ImportFormat {
                         bibtexType = "inproceedings";
                     } else if (type[i].contains("report")) {
                         bibtexType = "techreport";
-                    } else if (type[i].contains("thesis")
-                            && type[i].contains("master")) {
+                    } else if (type[i].contains("thesis") && type[i].contains("master")) {
                         bibtexType = "mastersthesis";
                     } else if (type[i].contains("thesis")) {
                         bibtexType = "phdthesis";
@@ -287,8 +250,7 @@ public class BiblioscapeImporter extends ImportFormat {
                 continue;
             }
             // new key
-            if (line.startsWith("--") && (line.length() >= 7)
-                    && "-- ".equals(line.substring(4, 7))) {
+            if (line.startsWith("--") && (line.length() >= 7) && "-- ".equals(line.substring(4, 7))) {
                 previousLine = new StringBuilder(line.substring(7));
                 lines.put(line.substring(2, 4), previousLine);
                 continue;
