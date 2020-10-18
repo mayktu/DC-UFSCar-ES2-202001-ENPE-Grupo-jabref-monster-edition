@@ -248,6 +248,7 @@ public class BibEntry {
      * extract the year from the 'date' field (analogously for 'month').
      */
     public String getFieldOrAlias(String name) {
+
         String fieldValue = getField(toLowerCase(name));
 
         if (!Strings.isNullOrEmpty(fieldValue)) {
@@ -273,6 +274,7 @@ public class BibEntry {
                 }
             }
         }
+
         if ("year".equals(name) || "month".equals(name)) {
             String date = getField("date");
             if (date == null) {
@@ -306,6 +308,7 @@ public class BibEntry {
                 Date parsedDate = df.parse(date);
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(parsedDate);
+
                 if ("year".equals(name)) {
                     return Integer.toString(calendar.get(Calendar.YEAR));
                 }
@@ -542,7 +545,6 @@ public class BibEntry {
         }
         return year;
     }
-
 
     public void setParsedSerialization(String parsedSerialization) {
         changed = false;

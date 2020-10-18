@@ -128,7 +128,8 @@ public class MedlinePlainImporter extends ImportFormat {
                         continue;
                     }
                     if (fields[j + 1].charAt(4) != '-') {
-                        if ((current.length() > 0) && !Character.isWhitespace(current.charAt(current.length() - 1))) {
+                        if ((current.length() > 0)
+                                && !Character.isWhitespace(current.charAt(current.length() - 1))) {
                             current.append(' ');
                         }
                         current.append(fields[j + 1].trim());
@@ -145,11 +146,15 @@ public class MedlinePlainImporter extends ImportFormat {
                     val = val.toLowerCase();
                     if ("book".equals(val)) {
                         type = "book";
-                    } else if ("journal article".equals(val) || "classical article".equals(val)
-                            || "corrected and republished article".equals(val) || "historical article".equals(val)
-                            || "introductory journal article".equals(val) || "newspaper article".equals(val)) {
+                    } else if ("journal article".equals(val)
+                            || "classical article".equals(val)
+                            || "corrected and republished article".equals(val)
+                            || "historical article".equals(val)
+                            || "introductory journal article".equals(val)
+                            || "newspaper article".equals(val)) {
                         type = "article";
-                    } else if ("clinical conference".equals(val) || "consensus development conference".equals(val)
+                    } else if ("clinical conference".equals(val)
+                            || "consensus development conference".equals(val)
                             || "consensus development conference, nih".equals(val)) {
                         type = "conference";
                     } else if ("technical report".equals(val)) {
@@ -224,10 +229,12 @@ public class MedlinePlainImporter extends ImportFormat {
                         String kw = hm.get("keywords");
                         hm.put("keywords", kw + ", " + val);
                     }
-                } else if ("CON".equals(lab) || "CIN".equals(lab) || "EIN".equals(lab) || "EFR".equals(lab)
-                        || "CRI".equals(lab) || "CRF".equals(lab) || "PRIN".equals(lab) || "PROF".equals(lab)
-                        || "RPI".equals(lab) || "RPF".equals(lab) || "RIN".equals(lab) || "ROF".equals(lab)
-                        || "UIN".equals(lab) || "UOF".equals(lab) || "SPIN".equals(lab) || "ORI".equals(lab)) {
+                } else if ("CON".equals(lab) || "CIN".equals(lab) || "EIN".equals(lab)
+                        || "EFR".equals(lab) || "CRI".equals(lab) || "CRF".equals(lab)
+                        || "PRIN".equals(lab) || "PROF".equals(lab) || "RPI".equals(lab)
+                        || "RPF".equals(lab) || "RIN".equals(lab) || "ROF".equals(lab)
+                        || "UIN".equals(lab) || "UOF".equals(lab) || "SPIN".equals(lab)
+                        || "ORI".equals(lab)) {
                     if (!comment.isEmpty()) {
                         comment = comment + "\n";
                     }
