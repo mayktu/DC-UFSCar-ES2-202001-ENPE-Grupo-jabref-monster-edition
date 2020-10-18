@@ -34,7 +34,6 @@ import org.apache.pdfbox.util.PDFTextStripper;
  * Integrating XMP support is future work
  */
 public class PdfContentImporter extends ImportFormat {
-
     private static final Log LOGGER = LogFactory.getLog(PdfContentImporter.class);
 
     private static final Pattern YEAR_EXTRACT_PATTERN = Pattern.compile("\\d{4}");
@@ -50,7 +49,6 @@ public class PdfContentImporter extends ImportFormat {
     private String curString;
 
     private String year;
-
 
     /**
      * Removes all non-letter characters at the end
@@ -194,7 +192,6 @@ public class PdfContentImporter extends ImportFormat {
             Optional<DOI> doi = DOI.findInText(firstPageContents);
             if (doi.isPresent()) {
                 ImportInspector inspector = new ImportInspector() {
-
                     @Override
                     public void setProgress(int current, int max) {
                         // Do nothing
@@ -298,8 +295,7 @@ public class PdfContentImporter extends ImportFormat {
             // then, abstract and keywords follow
             while (i < lines.length) {
                 curString = lines[i];
-                if ((curString.length() >= "Abstract".length())
-                        && "Abstract".equalsIgnoreCase(curString.substring(0, "Abstract".length()))) {
+                if ((curString.length() >= "Abstract".length()) && "Abstract".equalsIgnoreCase(curString.substring(0, "Abstract".length()))) {
                     if (curString.length() == "Abstract".length()) {
                         // only word "abstract" found -- skip line
                         curString = "";
@@ -315,8 +311,7 @@ public class PdfContentImporter extends ImportFormat {
                     }
                     abstractT = curString.trim();
                     i++;
-                } else if ((curString.length() >= "Keywords".length())
-                        && "Keywords".equalsIgnoreCase(curString.substring(0, "Keywords".length()))) {
+                } else if ((curString.length() >= "Keywords".length()) && "Keywords".equalsIgnoreCase(curString.substring(0, "Keywords".length()))) {
                     if (curString.length() == "Keywords".length()) {
                         // only word "Keywords" found -- skip line
                         curString = "";

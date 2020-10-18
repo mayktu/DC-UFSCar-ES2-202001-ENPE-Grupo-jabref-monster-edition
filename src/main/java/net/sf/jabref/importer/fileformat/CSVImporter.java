@@ -11,133 +11,133 @@ import java.util.Map;
 import net.sf.jabref.importer.ImportFormatReader;
 import net.sf.jabref.importer.OutputPrinter;
 import net.sf.jabref.model.entry.BibEntry;
-import net.sf.jabref.model.entry.MonthUtil;
 
 public class CSVImporter extends ImportFormat {
 
-	/**
-	 * Return the name of this import format.
-	 */
-	@Override
-	public String getFormatName() {
-		return "CSV";
-	}
+    /**
+     * Return the name of this import format.
+     */
+    @Override
+    public String getFormatName() {
+        return "CSV";
+    }
 
-	@Override
-	public boolean isRecognizedFormat(InputStream in) throws IOException {
-		// TODO Auto-generated method stub
-		return true;
-	}
+    @Override
+    public boolean isRecognizedFormat(InputStream in) throws IOException {
+        // TODO Auto-generated method stub
+        return true;
+    }
 
-	@Override
-	public List<BibEntry> importEntries(InputStream inStream, OutputPrinter status) throws IOException {
-		if (inStream == null) {
-			throw new IOException("No input given.");
-		}
+    @Override
+    public String getExtensions() {
+        return "csv";
+    }
 
-		List<BibEntry> bibitems = new ArrayList<>();
-		StringBuilder sb = new StringBuilder();
-		List<String> entries = new ArrayList<>();
+    @Override
+    public String getCLIId() {
+        return "csv";
+    }
 
-		try (BufferedReader input = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(inStream))) {
-			String str;
+    @Override
+    public List<BibEntry> importEntries(InputStream inStream, OutputPrinter status) throws IOException {
+        if (inStream == null) {
+            throw new IOException("No input given.");
+        }
 
-			while ((str = input.readLine()) != null) {
-				entries.add(str);
-			}
-		}
-		
-		
-		Map<String, String> hm = new HashMap<>();
-		String[] types = entries.get(0).split(",");
-		for (String entry : entries) {
-			String[] fields = entry.split(",");
+        List<BibEntry> bibitems = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
+        List<String> entries = new ArrayList<>();
+        String tipo = "";
+        try (BufferedReader input = new BufferedReader(ImportFormatReader.getReaderDefaultEncoding(inStream))) {
+            String str;
 
-			for (int i = 0; i < fields.length; i++) {
-				//primeira linha = metadados
-				if(fields[0].equals(types[0])) {
-					break;
-				}
-				
-				String Type = "";
-				String PT = "";
-				String pages = "";
-				hm.clear();
-				
-				if(types[i].equals("Author")) {
-					hm.put("author", fields[i]);
-				}else if(types[i].contentEquals("Publisher")) {
-					hm.put("publisher", fields[i]);
-				}else if(types[i].equals("Title")) {
-					hm.put("title", fields[i]);
-				}else if(types[i].equals("Pages")) {
-					hm.put("pages", fields[i]);
-				}else if(types[i].equals("Month")) {
-					hm.put("month", fields[i]);
-				}else if(types[i].equals("Booktitle")) {
-					hm.put("booktitle", fields[i]);
-				}else if(types[i].equals("Year")) {
-					hm.put("year", fields[i]);
-				}else if(types[i].equals("Number")) {
-					hm.put("number", fields[i]);
-				}else if(types[i].equals("Volume")) {
-					hm.put("volume", fields[i]);
-				}else if(types[i].equals("Journal")) {
-					hm.put("journal", fields[i]);
-				}
-			}
+            while ((str = input.readLine()) != null) {
+                entries.add(str);
+            }
+        }
 
-			BibEntry b = new BibEntry(DEFAULT_BIBTEXENTRY_ID, "article");
-			
-			 // Remove empty fields:
-			 List<Object> toRemove = new ArrayList<>();
-	            for (Map.Entry<String, String> field : hm.entrySet()) {
-	                String content = field.getValue();
-	                if ((content == null) || content.trim().isEmpty()) {
-	                    toRemove.add(field.getKey());
-	                }
-	            }
-	            for (Object aToRemove : toRemove) {
-	                hm.remove(aToRemove);
 
-	            }
-	            
-	            b.setField(hm);
-	            bibitems.add(b);
-		}
+        Map<String, String> hm = new HashMap<>();
+        String[] types = entries.get(0).split(",");
+        for (String entry : entries) {
+            String[] fields = entry.split(",");
 
-		return bibitems;
-	}
+            //primeira linha = metadados
+            if (fields[0].equals(types[0])) {
+                continue;
+            }
+            for (int i = 0; i < fields.length; i++) {
 
-	//peguei de outra função não sei se vai precisar
-	private static String parsePages(String value) {
-		int lastDash = value.lastIndexOf('-');
-		return value.substring(0, lastDash) + "--" + value.substring(lastDash + 1);
-	}
+                if (types[i].equals("Author")) {
+                    hm.put("author", fields[i].replaceAll("\"", ""));
+                } else if (types[i].contentEquals("Publisher")) {
+                    hm.put("publisher", fields[i].replaceAll("\"", ""));
+                } else if (types[i].equals("Title")) {
+                    hm.put("title", fields[i].replaceAll("\"", ""));
+                } else if (types[i].equals("Pages")) {
+                    hm.put("pages", fields[i]);
+                } else if (types[i].equals("Month")) {
+                    hm.put("month", fields[i]);
+                } else if (types[i].equals("Booktitle")) {
+                    hm.put("booktitle", fields[i].replaceAll("\"", ""));
+                } else if (types[i].equals("Year")) {
+                    hm.put("year", fields[i]);
+                } else if (types[i].equals("Number")) {
+                    hm.put("number", fields[i]);
+                } else if (types[i].equals("Volume")) {
+                    hm.put("volume", fields[i]);
+                } else if (types[i].equals("Journal")) {
+                    hm.put("journal", fields[i].replaceAll("\"", ""));
+                }
+            }
 
-	//peguei de outra função não sei se vai precisar
-	public static String parseMonth(String value) {
+            switch (Integer.parseInt(fields[0])) {
+            case 1:
+                tipo = "book";
+                break;
+            case 2:
+                tipo = "booklet";
+                break;
+            case 3:
+                tipo = "proceedings";
+                break;
+            case 5:
+                tipo = "inbook";
+                break;
+            case 6:
+                tipo = "inproceedings";
+                break;
+            case 7:
+                tipo = "article";
+                break;
+            case 8:
+                tipo = "manual";
+                break;
+            case 9:
+                tipo = "mastersthesis";
+                break;
+            case 10:
+                tipo = "conference";
+                break;
+            case 13:
+                tipo = "techreport";
+                break;
+            case 14:
+                tipo = "unpublished";
+                break;
 
-		String[] parts = value.split("\\s|\\-");
-		for (String part1 : parts) {
-			MonthUtil.Month month = MonthUtil.getMonthByShortName(part1.toLowerCase());
-			if (month.isValid()) {
-				return month.bibtexFormat;
-			}
-		}
+            default:
+                tipo = "article";
+            }
 
-		// Try two digit month
-		for (String part : parts) {
-			try {
-				int number = Integer.parseInt(part);
-				MonthUtil.Month month = MonthUtil.getMonthByNumber(number);
-				if (month.isValid()) {
-					return month.bibtexFormat;
-				}
-			} catch (NumberFormatException ignored) {
-				// Ignored
-			}
-		}
-		return null;
-	}
+            BibEntry b = new BibEntry(DEFAULT_BIBTEXENTRY_ID, tipo);
+
+            b.setField(hm);
+            bibitems.add(b);
+
+        }
+
+        return bibitems;
+    }
+
 }

@@ -29,12 +29,10 @@ import net.sf.jabref.logic.util.strings.StringUtil;
  * writing the same fields.
  */
 public class FieldContentParser {
-
     private final HashSet<String> multiLineFields;
 
     // 's' matches a space, tab, new line, carriage return.
     private static final Pattern WHITESPACE = Pattern.compile("\\s+");
-
 
     public FieldContentParser() {
         multiLineFields = new HashSet<>();
